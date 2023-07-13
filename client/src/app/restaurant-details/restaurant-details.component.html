@@ -1,0 +1,156 @@
+<div class="container mx-auto px-4 pb-12 flex flex-col lg:flex-row">
+  <!-- Menu and Info Section -->
+  <div class="lg:w-1/2 pr-4">
+    <!-- Restaurant Header -->
+    <header class="mt-8 mb-6 text-center lg:text-left">
+      <img
+ 
+        [src]="restaurant.headerImage"
+        class="rounded-lg w-full h-64 object-cover shadow-lg border-4 border-black mb-4"
+      />
+      <h1 class="text-4xl font-bold text-black">{{ restaurant.name }}</h1>
+      <p class="mt-2 text-lg text-black">{{ restaurant.address }}</p>
+      <div class="w-24 h-1 bg-yellow-600 rounded mt-3 mb-6"></div>
+    </header>
+
+    <!-- Restaurant Description -->
+    <div class="mb-10">
+      <h2 class="text-3xl font-bold text-black">About</h2>
+      <p class="mt-3 text-xl text-black">{{ restaurant.kitchen }}</p>
+    </div>
+
+    <!-- Menu Section -->
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold text-black">Menu</h2>
+      <div class="mt-8 grid grid-cols-1 gap-8">
+        <div *ngFor="let section of restaurant.sections">
+          <div class="shadow-lg rounded-lg p-6 bg-white">
+            <h3 class="text-xl font-bold text-black">{{ section.name }}</h3>
+            <div class="mt-6" *ngFor="let dish of section.dishes">
+              <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                  <img
+                    [src]="dish.imageUrl"
+
+                    class="w-10 h-10 object-cover rounded"
+                  />
+                  <p class="font-bold text-lg text-black">{{ dish.name }}</p>
+                </div>
+                <p class="font-bold text-lg text-black">
+                  {{ dish.price | currency }}
+                </p>
+              </div>
+              <p class="text-md text-black">{{ dish.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map and Reviews Section -->
+  <div class="lg:w-1/2 pl-4 mt-12 lg:mt-0">
+    <!-- Map Section -->
+    <div class="m-8 h-64 rounded overflow-hidden shadow-lg">
+      <google-map height="500px"
+      width="950px"
+      [center]="{ lat: 48.8566, lng: 2.3522 }"
+      [zoom]="zoom"
+      (mapClick)="moveMap($event)"
+      (mapMousemove)="move($event)">
+</google-map>
+
+    </div>
+
+    <!-- Other code above -->
+
+    <!-- Reviews Section -->
+    <div class="space-y-6">
+      <h2 class="text-3xl font-bold text-black mb-6">Reviews</h2>
+      <div class="space-y-4" *ngFor="let review of reviews">
+        <div class="bg-white shadow rounded-lg p-6">
+          <div>
+            <div>
+              <span class="flex items-center">
+                <span class="text-gray-600 text-xl">{{ review.rating }}/10</span>
+
+                <span *ngFor="let i of createArray(review.rating); let c = index">
+                  <mat-icon color="accent">
+                    {{ showIcon(c, review.rating) }}
+                  </mat-icon>
+                </span>
+              </span>
+            </div>
+            
+          </div>
+          <h3 class="text-xl font-bold mb-1">
+            {{ review.name }}
+            <span *ngIf="review.email" class="text-gray-500 text-sm">
+              ({{ review.email }})
+            </span>
+          </h3>
+
+          <p class="text-gray-600">{{ review.comment }}</p>
+
+          <div class="mt-2 text-gray-500 text-sm">
+            {{ formatDate(review.date) }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Review Input Section -->
+      <form [formGroup]="reviewForm" class="w-full max-w-lg space-y-4">
+        <div>
+          <label class="block text-black text-lg mb-2" for="review"
+            >Add a review:</label
+          >
+          <input
+            formControlName="name"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Your name"
+          />
+
+          <input
+            formControlName="email"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline mt-2"
+            id="email"
+            type="email"
+            placeholder="Your email"
+          />
+          <div>
+            <button
+              mat-icon-button
+              *ngFor="let ratingId of ratingArr; index as i"
+              [id]="'star_' + i"
+              (click)="onClick(i + 1)"
+              matTooltipPosition="above"
+            >
+              <mat-icon color="accent">
+                {{ showIconForm(i) }}
+              </mat-icon>
+            </button>
+          </div>
+
+          <input
+            formControlName="comment"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline mt-2"
+            id="comment"
+            type="text"
+            placeholder="Your comment"
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+            (click)="submitReview()"
+            class="bg-yellow-600 hover:bg-yellow-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

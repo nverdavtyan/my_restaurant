@@ -1,0 +1,66 @@
+<div class="container mx-auto px-4">
+  <h1 class="text-3xl mb-6 text-center">Inscription</h1>
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    class="w-full max-w-sm mx-auto rounded-lg shadow-md overflow-hidden bg-white px-6 py-4"
+  >
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname"
+        >Prénom
+      </label>
+      <input
+        formControlName="firstname"
+        type="text"
+        id="firstname"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+        placeholder="Nom "
+      />
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="lastname"
+        >Nom</label
+      >
+      <input
+        formControlName="lastname"
+        type="text"
+        id="lastname"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+        placeholder="Nom d'utilisateur"
+      />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email"
+        >Email</label
+      >
+      <input
+        formControlName="email"
+        type="email"
+        id="email"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+        placeholder="Email"
+      />
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password"
+        >Mot de passe</label
+      >
+      <input
+        formControlName="password"
+        type="password"
+        id="password"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+        placeholder="Mot de passe"
+      />
+    </div>
+    <div class="flex items-center justify-between">
+      <button
+        class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit"
+      >
+        Inscription
+      </button>
+    </div>
+  </form>
+</div>

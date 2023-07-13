@@ -1,0 +1,48 @@
+<nav class="bg-gray-800" *ngIf="restaurant">
+  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="relative flex items-center justify-between h-16">
+      <div
+        class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
+      >
+        <div class="hidden sm:block sm:ml-6">
+          <div class="flex space-x-4">
+            <ng-container>
+              <a
+                [routerLink]="['/admin/my-restaurant']"
+                routerLinkActive="bg-gray-900"
+                class="px-3 py-2 rounded-md text-sm font-medium text-white hover:bg-gray-700"
+                >Home</a
+              >
+              <a
+                [routerLink]="['/admin/create-section']"
+                routerLinkActive="bg-gray-900"
+                class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                >Créer une section</a
+              >
+              <a
+                [routerLink]="['/admin/create-dish']"
+                routerLinkActive="bg-gray-900"
+                class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                >Créer un plat</a
+              >
+              <a
+                [routerLink]="['/admin/drag-drop']"
+                routerLinkActive="bg-gray-900"
+                class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                >Créer La carte</a
+              >
+              <a
+                [routerLink]="['/admin/create-menu']"
+                routerLinkActive="bg-gray-900"
+                class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+                >Test</a
+              >
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>

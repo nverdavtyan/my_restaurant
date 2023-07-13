@@ -1,0 +1,237 @@
+<ng-template #loading>
+  <nz-spin nzSimple></nz-spin>
+</ng-template>
+
+<button
+  *ngIf="!restaurant"
+  (click)="showCreateModal()"
+  class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full inline-flex items-center"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    class="w-4 h-4 mr-2"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+    ></path>
+  </svg>
+  Créer mon restaurant
+</button>
+
+<button
+  *ngIf="restaurant"
+  (click)="showEditModal(restaurant)"
+  class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full inline-flex items-center"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    class="w-4 h-4 mr-2"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+    ></path>
+  </svg>
+  Modifer mon restaurant
+</button>
+
+<div
+  *ngIf="restaurant"
+  class="w-full max-w-3xl m-auto mt-4 bg-white rounded-xl shadow-md overflow-hidden"
+>
+  <img
+    class="w-full h-64 object-cover"
+    [src]="restaurant.headerImage"
+    alt="Image du restaurant"
+  />
+
+  <div class="p-8">
+    <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+      {{ restaurant.name }}
+    </div>
+    <p class="mt-2 text-gray-500">Cuisine : {{ restaurant.kitchen }}</p>
+    <p class="mt-2 text-gray-500">
+      Couleur du lien : {{ restaurant.linkColor }}
+    </p>
+    <p class="mt-2 text-gray-500">Adresse : {{ restaurant.address }}</p>
+    <p class="mt-2 text-gray-500">
+      Informations de contact : {{ restaurant.contactInfo }}
+    </p>
+    <button
+      class="mt-4 px-2 py-1 font-semibold leading-tight text-white bg-red-500 rounded hover:bg-red-600"
+      (click)="showDeleteConfirm()"
+    >
+      Supprimer mon restaurant
+    </button>
+  </div>
+
+  <div class="p-8">
+    <div class="font-semibold text-lg mb-2">La carte</div>
+    <div class="space-y-4">
+      <div *ngFor="let section of restaurant.sections">
+        <div class="font-semibold text-md">{{ section.name }}</div>
+        <div *ngFor="let dish of section.dishes">
+          <div class="flex justify-between items-center">
+            <div class="text-sm">{{ dish.name }}</div>
+            <div class="text-sm text-gray-500">{{ dish.price | currency }}</div>
+          </div>
+          <img
+            class="w-16 h-16 object-cover mt-1"
+            [src]="dish.imageUrl"
+            alt="Image du plat"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nz-modal
+  [(nzVisible)]="createIsVisible"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  (nzOnCancel)="handleCancel()"
+  [nzFooter]="modalFooter"
+>
+  <ng-template #modalTitle>{{
+    editMode ? "Modifier un restaurant" : "Créer un restaurant"
+  }}</ng-template>
+
+  <ng-template #modalContent>
+    <form nz-form [formGroup]="registerForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"
+          >Nom</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir un nom valide !"
+        >
+          <input nz-input formControlName="name" id="name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="address"
+          >Adresse</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir une adresse valide !"
+        >
+          <input
+            nz-input
+            formControlName="address"
+            id="address"
+            ngx-google-places-autocomplete
+            [options]="options"
+            (onAddressChange)="handleAddressChange($event)"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="phone"
+          >Phone</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir des informations de contact valide !"
+        >
+          <input nz-input formControlName="phone" id="phone" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="url"
+          >Url</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir un nom valide !"
+        >
+          <input nz-input formControlName="url" id="url" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="linkColor"
+          >Couleur de la page</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir un nom valide !"
+        >
+          <input nz-input formControlName="linkColor" id="linkColor" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="kitchen"
+          >Cuisine</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir un nom valide !"
+        >
+          <input nz-input formControlName="kitchen" id="kitchen" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label class="title">Image</nz-form-label>
+        <nz-form-control [nzSpan]="18" nzHasFeedback>
+          <nz-upload
+            nzListType="picture-card"
+            [(nzFileList)]="fileList"
+            [nzShowButton]="fileList.length === 0"
+            [nzBeforeUpload]="beforeUpload"
+          >
+            <input style="display: none" formControlName="file" />
+            <div>
+              <i nz-icon nzType="plus"></i>
+              <div style="margin-top: 8px">Upload</div>
+            </div>
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Ajoutez plus de champs de formulaire ici pour les autres propriétés de votre modèle de restaurant -->
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="default" (click)="handleCancel()">
+          Annuler
+        </button>
+        <button
+          nz-button
+          nzType="primary"
+          (click)="editMode ? updateRestaurant() : register()"
+          [nzLoading]="isConfirmLoading"
+        >
+          Enregistrer
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-template>
+</nz-modal>

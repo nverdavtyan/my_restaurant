@@ -1,0 +1,64 @@
+<div cdkDropListGroup  class="m-4">
+  <div class="example-container p-4 bg-gray-100 rounded shadow-md m-4" *ngFor="let section of sections">
+    <h1 class="text-2xl font-bold mb-4">{{ section.name }}</h1>
+    <div
+      cdkDropList
+      id="section"
+      [cdkDropListData]="section.dishes"
+      class="example-list space-y-2"
+      (cdkDropListDropped)="drop($event, section)"
+    >
+      <div
+        class="example-box p-4 bg-white rounded shadow-md flex justify-between items-center"
+        *ngFor="let dish of section.dishes"
+        cdkDrag
+        [cdkDragData]="dish"
+      >
+        <div class="dish-info flex items-center">
+          <img
+            [src]="dish.imageUrl"
+            alt="Dish Image"
+            class="dish-image w-12 h-12 rounded-full"
+          />
+          <div class="dish-details ml-2">
+            <span class="dish-name font-medium">{{ dish.name }}</span>
+            <span class="dish-price text-sm text-gray-500">Price: {{ dish.price }} €</span>
+          </div>
+        </div>
+        <button
+          nz-button
+          nzType="default"
+          class="bg-red-500 text-white rounded px-2 py-1"
+          (click)="removeDishFromSection(section.id, dish.id)"
+        >
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-container p-4 bg-gray-100 rounded shadow-md m-4">
+    <h2 class="text-2xl font-bold mb-4">La liste des plats</h2>
+    <div
+      cdkDropList
+      id="dishes"
+      [cdkDropListData]="dishes"
+      class="example-list space-y-2"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div class="example-box p-4 bg-white rounded shadow-md flex items-center" *ngFor="let dish of dishes" cdkDrag>
+        <div class="dish-info flex items-center">
+          <img
+            [src]="dish.imageUrl"
+            alt="Dish Image"
+            class="dish-image w-12 h-12 rounded-full"
+          />
+          <div class="dish-details ml-2">
+            <span class="dish-name font-medium">{{ dish.name }}</span>
+            <span class="dish-price text-sm text-gray-500">Price: {{ dish.price }} €</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

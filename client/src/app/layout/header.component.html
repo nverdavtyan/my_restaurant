@@ -1,0 +1,78 @@
+<nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+  <div class="flex items-center flex-shrink-0 text-white mr-6">
+    <span class="font-semibold text-xl tracking-tight">MyRestaurant</span>
+  </div>
+  <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div class="text-sm lg:flex-grow">
+      <a
+        class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-black mr-4 flex items-center"
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon class="mr-1" fontIcon="home"></mat-icon> Page d'accueil
+      </a>
+
+      <a
+        class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-black mr-4 flex items-center"
+        routerLink="/admin/my-restaurant"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        *ngIf="isAuthenticated"
+      >
+        <mat-icon class="mr-1" fontIcon="admin_panel_settings"></mat-icon> Admin
+        Panel
+      </a>
+    </div>
+
+    <div class="flex items-center">
+      <a
+        href="#responsive-header"
+        class="text-white lg:ml-4"
+        routerLink="/login"
+        routerLinkActive="active"
+        *ngIf="!(authService.isLoggedIn | async)"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="login"
+        ></mat-icon>
+        Login
+      </a>
+      <a
+        href="#responsive-header"
+        class="text-white lg:ml-4"
+        routerLink="/register"
+        routerLinkActive="active"
+        *ngIf="!(authService.isLoggedIn | async)"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="settings"
+        ></mat-icon>
+
+        Register
+      </a>
+
+      <a
+        href="#responsive-header"
+        class="text-white lg:ml-4"
+        (click)="logout()"
+        routerLinkActive="active"
+        *ngIf="isAuthenticated"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="logout"
+        ></mat-icon>
+        Logout
+      </a>
+    </div>
+  </div>
+</nav>

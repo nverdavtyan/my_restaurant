@@ -1,0 +1,93 @@
+<header
+  class="rounded-2xl m-10 bg-gradient-to-b from-green-800 to-green-900 h-[70vh] flex flex-col gap-2 px-10 text-white items-center justify-center"
+  style="background: linear-gradient(rgb(0, 77, 69) 0%, rgb(0, 51, 46) 100%);"
+>
+  <div class="text-3xl font-bold">Découvrez et réservez le meilleur restaurant</div>
+
+  <div class="flex items-center gap-4 mt-8">
+    <div class="relative w-1/2">
+      <svg
+        class="w-6 h-6 absolute left-3 top-3 text-gray-500"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        class="pl-12 pr-4 py-3 rounded-lg text-gray-900 bg-white w-full shadow-lg"
+        type="search"
+        placeholder="Recherchez une adresse"
+      />
+    </div>
+    <div class="relative w-full">
+      <svg
+        class="w-6 h-6 absolute left-3 top-3 text-gray-500"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        class="pl-12 pr-4 py-3 rounded-lg text-gray-900 bg-white w-full shadow-lg"
+        type="search"
+        placeholder="Recherchez un restaurant"
+      />
+    </div>
+  </div>
+
+  <div class="w-full h-1/3 mt-8">
+    <img src="assets/header_image.webp" alt="Dish Image" class="w-full h-full object-cover rounded-md shadow-lg">
+  </div>
+</header>
+
+
+
+
+<div class="container mx-auto px-4  m-8 sm:px-6 lg:px-8">
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div *ngFor="let restaurant of restaurants">
+      <a [routerLink]="['/restaurant-detail', restaurant.id]" class="block transition-all transform hover:scale-105 duration-500 ease-in-out hover:shadow-lg cursor-pointer overflow-hidden rounded-lg shadow-md bg-gray-100">
+        <img
+          class="w-full h-46 object-cover"
+          [src]="restaurant.headerImage"
+          alt="{{ restaurant.name }}"
+        />
+        <div class="p-4">
+          <div class="flex items-baseline">
+            <span class="inline-block bg-gray-200 text-gray-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide">
+              {{ restaurant.kitchen }}
+            </span>
+            <div class="ml-2 text-gray-400 text-xs uppercase font-semibold tracking-wide">
+              {{ restaurant.address }}
+            </div>
+          </div>
+          <h4 class="mt-2 text-base font-semibold leading-tight truncate">
+            {{ restaurant.name }}
+          </h4>
+          <div class="mt-1">
+            <span class="text-gray-600">
+              <i class="fas fa-external-link-alt text-xs"></i> {{ restaurant.url }}
+            </span>
+          </div>
+          <div class="mt-2 flex items-center text-sm text-gray-600">
+            <span>
+              <i class="fas fa-phone-alt text-xs"></i> {{ restaurant.contactInfo }}
+            </span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

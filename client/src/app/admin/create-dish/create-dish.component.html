@@ -1,0 +1,158 @@
+<ng-template #loading>
+  <nz-spin nzSimple></nz-spin>
+</ng-template>
+
+<button *ngIf="!dish" nzType="primary" (click)="showCreateModal()" class="mt-4">
+  <i nz-icon nzType="plus-circle" nzTheme="outline" style="font-size: 16px"></i>
+  Créer un plat
+</button>
+
+<nz-modal
+  [(nzVisible)]="createIsVisible"
+  [nzTitle]="modalTitle"
+  [nzContent]="modalContent"
+  (nzOnCancel)="handleCancel()"
+  [nzFooter]="modalFooter"
+>
+  <ng-template #modalTitle>Créer un plat</ng-template>
+
+  <ng-template #modalContent>
+    <form nz-form [formGroup]="validateForm">
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name"
+          >Nom</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir un nom valide !"
+        >
+          <input nz-input formControlName="name" id="name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="description"
+          >Description</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir une description valide !"
+        >
+          <input nz-input formControlName="description" id="description" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="price"
+          >Prix</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir un prix valide !"
+        >
+          <input nz-input formControlName="price" id="price" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="allergens"
+          >Allergènes</nz-form-label
+        >
+        <nz-form-control
+          [nzSm]="14"
+          [nzXs]="24"
+          nzErrorTip="Veuillez saisir des allergènes valides !"
+        >
+          <input nz-input formControlName="allergens" id="allergens" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label class="title">Image</nz-form-label>
+        <nz-form-control [nzSpan]="18" nzHasFeedback>
+          <nz-upload
+            nzListType="picture-card"
+            [(nzFileList)]="fileList"
+            [nzShowButton]="fileList.length === 0"
+            [nzBeforeUpload]="beforeUpload"
+          >
+            <input style="display: none" formControlName="file" />
+            <div>
+              <i nz-icon nzType="plus"></i>
+              <div style="margin-top: 8px">Upload</div>
+            </div>
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <nz-form-item>
+      <nz-form-control>
+        <button nz-button nzType="default" (click)="handleCancel()">
+          Annuler
+        </button>
+        <button
+          nz-button
+          nzType="primary"
+          (click)="editMode ? updateDish(dish.id) : register()"
+          [nzLoading]="isConfirmLoading"
+          [disabled]="!validateForm.valid"
+          
+          
+        >
+          Enregistrer
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </ng-template>
+</nz-modal>
+
+<!-- cards -->
+<div class="container mx-auto py-6 px-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <div *ngFor="let dish of dishes">
+      <div
+        class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl"
+      >
+        <div class="md:flex">
+          <div class="md:flex-shrink-0">
+            <img
+              class="h-48 w-full object-cover md:w-48"
+              [src]="dish.imageUrl"
+              alt="Dish image"
+            />
+          </div>
+          <div class="p-8">
+            <div
+              class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"
+            >
+              {{ dish.name }}
+            </div>
+            <p class="mt-2 text-gray-500">{{ dish.description }}</p>
+            <p class="mt-2 text-gray-500 text-xl font-bold">
+              Prix: {{ dish.price }}€
+            </p>
+            <p class="mt-2 text-gray-500">Allergens: {{ dish.allergens }}</p>
+            <button
+              class="mt-3 px-2 py-1 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-700 transition-colors"
+              (click)="showDeleteConfirm(dish.id)"
+            >
+              Supprimer
+            </button>
+            <button
+            class="mt-3 ml-1 px-2 py-1 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-700 transition-colors"
+            (click)="showEditModal(dish)"
+          >
+            modifier
+          </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
