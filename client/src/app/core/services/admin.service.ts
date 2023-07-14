@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
-  private apiUrl = 'http://localhost:8080/restaurant';
+  private apiUrl = environment.apiUrl;
 
   private restaurant = new BehaviorSubject(null);
   currentRestaurant = this.restaurant.asObservable();
-  
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -27,11 +27,9 @@ export class AdminService {
     console.log(this.restaurant);
   }
 
-
   getRestaurantById(): Observable<any> {
-    return this.http.get(this.apiUrl + '/manage', this.httpOptions);
+    return this.http.get(this.apiUrl + '/restaurant/manage', this.httpOptions);
   }
-
 
   post(restaurant: any): Observable<any> {
     let headers = new HttpHeaders({
@@ -44,10 +42,14 @@ export class AdminService {
       responseType: 'text' as 'json',
     };
 
-    return this.http.post(this.apiUrl, restaurant, httpOptionsMultipart);
+    return this.http.post(
+      this.apiUrl + '/restaurant/',
+      restaurant,
+      httpOptionsMultipart
+    );
   }
 
-  updateRestaurant(restaurant: any, ): Observable<any> {
+  updateRestaurant(restaurant: any): Observable<any> {
     let headers = new HttpHeaders({
       Authorization: 'Bearer ' + localStorage.getItem('access_token'),
     });

@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  
-  baseUrl = 'http://localhost:8080/user/';
+  baseUrl = environment.apiUrl;
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
 
   get isLoggedIn() {
@@ -22,7 +21,7 @@ export class AuthService {
   }
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'authenticate', model).pipe(
+    return this.http.post(this.baseUrl + '/user/authenticate', model).pipe(
       map((response: any) => {
         const user = response;
         if (user) {
