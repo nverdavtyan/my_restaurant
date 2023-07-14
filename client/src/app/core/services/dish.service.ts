@@ -6,12 +6,12 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class DishService {
-  private apiUrl = environment.apiUrl;
+
 
   constructor(private http: HttpClient) {}
 
   getDishes() {
-    return this.http.get<any>(this.apiUrl + '/dish');
+    return this.http.get<any>(environment.apiUrl + '/dish');
   }
 
   post(dish: any): Observable<any> {
@@ -26,7 +26,7 @@ export class DishService {
       responseType: 'text' as 'json',
     };
 
-    return this.http.post(this.apiUrl + '/dish/', dish, httpOptionsMultipart);
+    return this.http.post(environment.apiUrl + '/dish/', dish, httpOptionsMultipart);
   }
 
   updateDish(id: any, dish: any): Observable<any> {
@@ -40,14 +40,14 @@ export class DishService {
       responseType: 'text' as 'json',
     };
     return this.http.put(
-      this.apiUrl + '/dish/' + id,
+      environment.apiUrl+ '/dish/' + id,
       dish,
       httpOptionsMultipart
     );
   }
 
   deleteDish(id: any): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}`, {
+    return this.http.delete<any>(`${environment.apiUrl}/${id}`, {
       responseType: 'text' as 'json',
     });
   }

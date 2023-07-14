@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = environment.apiUrl;
+
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
 
   get isLoggedIn() {
@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   login(model: any) {
-    return this.http.post(this.baseUrl + '/user/authenticate', model).pipe(
+    return this.http.post(environment.apiUrl+ '/user/authenticate', model).pipe(
       map((response: any) => {
         const user = response;
         if (user) {
@@ -42,6 +42,6 @@ export class AuthService {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model);
+    return this.http.post(environment.apiUrl + '/register', model);
   }
 }

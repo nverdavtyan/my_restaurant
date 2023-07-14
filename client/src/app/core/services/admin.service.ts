@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AdminService {
-  private apiUrl = environment.apiUrl;
+
 
   private restaurant = new BehaviorSubject(null);
   currentRestaurant = this.restaurant.asObservable();
@@ -28,7 +28,7 @@ export class AdminService {
   }
 
   getRestaurantById(): Observable<any> {
-    return this.http.get(this.apiUrl + '/restaurant/manage', this.httpOptions);
+    return this.http.get(environment.apiUrl+ '/restaurant/manage', this.httpOptions);
   }
 
   post(restaurant: any): Observable<any> {
@@ -43,7 +43,7 @@ export class AdminService {
     };
 
     return this.http.post(
-      this.apiUrl + '/restaurant',
+      environment.apiUrl + '/restaurant',
       restaurant,
       httpOptionsMultipart
     );
@@ -59,10 +59,10 @@ export class AdminService {
       withCredentials: true,
       responseType: 'text' as 'json',
     };
-    return this.http.put(this.apiUrl, restaurant, httpOptionsMultipart);
+    return this.http.put(environment.apiUrl, restaurant, httpOptionsMultipart);
   }
 
   deleteRestaurant(): Observable<any> {
-    return this.http.delete(this.apiUrl + '/restaurant', this.httpOptions);
+    return this.http.delete(environment.apiUrl + '/restaurant', this.httpOptions);
   }
 }

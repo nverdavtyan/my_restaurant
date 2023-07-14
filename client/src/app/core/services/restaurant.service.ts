@@ -6,19 +6,18 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class RestaurantService {
-  private apiUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 
   getRestaurants() {
-    return this.http.get<any>(this.apiUrl + '/restaurant/all');
+    return this.http.get<any>(environment.apiUrl+ '/restaurant/all');
   }
 
   getRestaurantById(id: any): Observable<any> {
-    return this.http.get(`${this.apiUrl}/restaurant/${id}`);
+    return this.http.get(`${environment.apiUrl}/restaurant/${id}`);
   }
 
   createReview(review: any): Observable<any> {
-    return this.http.post(this.apiUrl + '/review', review);
+    return this.http.post(environment.apiUrl + '/review', review);
   }
 }

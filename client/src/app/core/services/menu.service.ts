@@ -6,8 +6,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class MenuService {
-  private apiUrl = environment.apiUrl;
-
   constructor(private http: HttpClient) {}
 
   httpOptions = {
@@ -18,16 +16,16 @@ export class MenuService {
   };
 
   getSections(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl+'/section');
+    return this.http.get<any[]>(environment.apiUrl + '/section');
   }
 
   addDishToSection(sectionId: string, dishId: string): Observable<any> {
-    const url = `${this.apiUrl}/section/${sectionId}/dishes/${dishId}`;
+    const url = `${environment.apiUrl}/section/${sectionId}/dishes/${dishId}`;
     return this.http.post<any>(url, {});
   }
-  
+
   removeDishFromSection(sectionId: string, dishId: string): Observable<any> {
-    const url = `${this.apiUrl}/section/${sectionId}/dishes/${dishId}`;
+    const url = `${environment.apiUrl}/section/${sectionId}/dishes/${dishId}`;
     return this.http.delete<any>(url);
   }
 }

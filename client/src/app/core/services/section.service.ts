@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 @Injectable({ providedIn: 'root' })
 export class SectionService {
-  private apiUrl = environment.apiUrl;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -16,12 +15,12 @@ export class SectionService {
   constructor(private http: HttpClient) {}
 
   getSections(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl + '/section');
+    return this.http.get<any[]>(environment.apiUrl+ '/section');
   }
 
   createSection(section: any): Observable<any> {
     return this.http.post<any>(
-      this.apiUrl + '/section/',
+      environment.apiUrl+ '/section/',
       section,
       this.httpOptions
     );
@@ -29,7 +28,7 @@ export class SectionService {
 
   deleteSection(id: string): Observable<any> {
     return this.http.delete<any>(
-      `${this.apiUrl}/section/${id}`,
+      `${environment.apiUrl}/section/${id}`,
       this.httpOptions
     );
   }
