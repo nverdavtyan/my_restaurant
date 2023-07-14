@@ -26,7 +26,7 @@ export class DishService {
       responseType: 'text' as 'json',
     };
 
-    return this.http.post(environment.apiUrl + '/dish/', dish, httpOptionsMultipart);
+    return this.http.post(environment.apiUrl + '/dish', dish, httpOptionsMultipart);
   }
 
   updateDish(id: any, dish: any): Observable<any> {
