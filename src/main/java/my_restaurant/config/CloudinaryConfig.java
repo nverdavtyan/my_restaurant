@@ -1,9 +1,6 @@
 package my_restaurant.config;
 
 import com.cloudinary.Cloudinary;
-
-import io.github.cdimascio.dotenv.Dotenv;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,10 +10,9 @@ import java.util.Map;
 @Configuration
 public class CloudinaryConfig {
 
-    Dotenv dotenv = Dotenv.load();
-    String dbName = dotenv.get("CLOUDINARY_NAME");
-    String dbKey = dotenv.get("CLOUDINARY_API_KEY");
-    String dbSecret = dotenv.get("CLOUDINARY_API_SECRET");
+    String dbName = System.getenv("CLOUDINARY_NAME");
+    String dbKey = System.getenv("CLOUDINARY_API_KEY");
+    String dbSecret = System.getenv("CLOUDINARY_API_SECRET");
 
     private final String CLOUD_NAME = dbName;
     private final String API_KEY = dbKey;
