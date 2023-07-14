@@ -13,22 +13,14 @@ import java.util.Map;
 @Configuration
 public class CloudinaryConfig {
 
-    private final String CLOUD_NAME;
-    private final String API_KEY;
-    private final String API_SECRET;
+    Dotenv dotenv = Dotenv.load();
+    String dbName = dotenv.get("CLOUDINARY_NAME");
+    String dbKey = dotenv.get("CLOUDINARY_API_KEY");
+    String dbSecret = dotenv.get("CLOUDINARY_API_SECRET");
 
-    public CloudinaryConfig() {
-        if (System.getenv("CLOUDINARY_NAME") != null) {
-            CLOUD_NAME = System.getenv("CLOUDINARY_NAME");
-            API_KEY = System.getenv("CLOUDINARY_API_KEY");
-            API_SECRET = System.getenv("CLOUDINARY_API_SECRET");
-        } else {
-            Dotenv dotenv = Dotenv.load();
-            CLOUD_NAME = dotenv.get("CLOUDINARY_NAME");
-            API_KEY = dotenv.get("CLOUDINARY_API_KEY");
-            API_SECRET = dotenv.get("CLOUDINARY_API_SECRET");
-        }
-    }
+    private final String CLOUD_NAME = dbName;
+    private final String API_KEY = dbKey;
+    private final String API_SECRET = dbSecret;
 
     @Bean
     public Cloudinary cloudinary() {
