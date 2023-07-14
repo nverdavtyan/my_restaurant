@@ -3,7 +3,7 @@ package my_restaurant.config;
 import com.cloudinary.Cloudinary;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import io.github.cdimascio.dotenv.Dotenv;
+
 
 import java.util.HashMap;
 import java.util.Map;
