@@ -20,7 +20,7 @@ export class SectionService {
 
   createSection(section: any): Observable<any> {
     return this.http.post<any>(
-      environment.apiUrl+ '/section/',
+      environment.apiUrl+ '/section',
       section,
       this.httpOptions
     );
