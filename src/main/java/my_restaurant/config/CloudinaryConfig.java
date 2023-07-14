@@ -11,7 +11,6 @@ import java.util.Map;
 @Configuration
 public class CloudinaryConfig {
 
-    Dotenv dotenv = Dotenv.load();
     String dbName = System.getenv("CLOUDINARY_NAME");
     String dbKey = System.getenv("CLOUDINARY_API_KEY");
     String dbSecret = System.getenv("CLOUDINARY_API_SECRET");
