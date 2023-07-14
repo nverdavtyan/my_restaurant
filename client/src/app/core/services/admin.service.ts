@@ -43,7 +43,7 @@ export class AdminService {
     };
 
     return this.http.post(
-      this.apiUrl + '/restaurant/',
+      this.apiUrl + '/restaurant',
       restaurant,
       httpOptionsMultipart
     );
@@ -63,6 +63,6 @@ export class AdminService {
   }
 
   deleteRestaurant(): Observable<any> {
-    return this.http.delete(this.apiUrl, this.httpOptions);
+    return this.http.delete(this.apiUrl + '/restaurant', this.httpOptions);
   }
 }
